@@ -1,0 +1,43 @@
+#!/bin/sh -fue
+# shellcheck disable=SC2223
+# Made by jumps are op
+# This software is under GPL version 3 and comes with ABSOLUTELY NO WARRANTY
+
+# Warper around gensite.sh
+: ${DRYRUN:=}
+
+# Configuration
+: ${CONFIG_CONTENTDIR:=content} ${CONFIG_STATICDIR:=static}
+: ${CONFIG_PUBLICDIR:=public} ${CONFIG_HEADER:=header} ${CONFIG_FOOTER:=footer}
+: ${CONFIG_PARSERS:=parsers} ${CONFIG_MKDIRARGS:=} ${CONFIG_CPARGS:=}
+
+# Check for GNU's -v
+[ "$(mkdir 2>&1)" = "mkdir: missing operand
+Try 'mkdir --help' for more information." ] &&
+	CONFIG_MKDIRARGS="$CONFIG_MKDIRARGS -v"
+[ "$(cp 2>&1)" = "cp: missing file operand
+Try 'cp --help' for more information." ] &&
+	CONFIG_CPARGS="$CONFIG_CPARGS -v"
+
+rm -rf -- "$CONFIG_PUBLICDIR"
+export CONFIG_CONTENTDIR CONFIG_STATICDIR CONFIG_PUBLICDIR CONFIG_HEADER \
+	CONFIG_FOOTER CONFIG_PARSERS CONFIG_MKDIRARGS CONFIG_CPARGS
+gensite.sh
+
+set +e
+if [ ! "$DRYRUN" ];then
+	echo "--- Pushing to github ---"
+
+	#git push 
+	#git add "$CONFIG_PUBLICDIR" && git commit -m "Rebuild by gensite at $(date)"
+	#git push
+
+	echo "--- Uploading to jumps.neocities.org ---"
+	if command -v shcities >/dev/null;then
+		shcities push "$CONFIG_PUBLICDIR"
+	else
+		echo "shcities isn't installed, please install shcities." >&2
+	fi
+fi
+
+command -v tree >/dev/null && { echo "Here you go"; tree "$CONFIG_PUBLICDIR";}

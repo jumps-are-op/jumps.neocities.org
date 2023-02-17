@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# Made by jumps are op
+# This software is under GPL version 3 and comes with ABSOLUTELY NO WARRANTY
+
+main(){
+	if [ "$2" = content/blog/index.jmu ];then
+		echo "<ul>"
+		while read -r file;do
+			[ "$file" =  content/blog/index.jmu ] && continue
+			title=$(grep '^title: ' -- "$file" | head -n1)
+			title=${title#title: }
+			title=${title%%  }
+			file=${file#content}
+			echo "<li><a href=\"${file%.*}.html\">${title:-"${file%.*}.html"}</a></li>"
+		done <<-EOF
+			$(find content/blog -type f | sort)
+		EOF
+		echo "</ul>"
+	fi
+	cat <<-EOF
+ </div>
+</section>
+<footer>
+  <p>Powered by
+   <a href="https://github.com/jumps-are-op">my mind</a> and
+   <a href="https://en.wikipedia.org/wiki/POSIX">POSIX shell</a> scripts
+  </p>
+</footer>
+</body>
+</html>
+	EOF
+}
+
+main "$@"

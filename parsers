@@ -1,0 +1,16 @@
+# Any line start with # is ignored
+# Format: EXTENSION [PROGRAM] [ARGUMENTS]
+# PROGRAM and ARGUMENTS is a string passed to the shell so
+#
+# txt f(){ echo "Passing plain text file $2" >&2; cat "$@";}; f
+#
+# will print "Passing plain text file $2" to stderr and copy the file
+# NOTE: All output to stdout will be saved as html file
+# NOTE: Any extension not here is ignored
+# NOTE: Any extension without a program is ignored
+# NOTE: Environment is copied to the child process, so you can use $VAR
+# NOTE: "-- $FILE" is added to the string
+md markdown -b "$URL"
+jmu jmu
+jm jmu
+html cat

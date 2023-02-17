@@ -1,0 +1,50 @@
+#!/bin/sh
+# Made by jumps are op
+# This software is under GPL version 3 and comes with ABSOLUTELY NO WARRANTY
+
+# read title
+while read -r line;do
+	case $line in
+		title:\ *)
+			title=${line#title: }
+			title=${title%  }
+			case $1 in */blog/*)title="Blog: $title"; esac
+			break
+		;;
+	esac
+done <"$2"
+
+: "${title:-Jump\'s webpage}"
+cat <<-EOF
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$title</title>
+<link rel="stylesheet" href="/style.css"/>
+<link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+</head>
+<nav class="menu">
+ <div class="nav-left">
+  <ul><li>
+   <a href="/">
+    <img class="logo" src="/favicon.png" alt=""/>
+    <span class="sitename">${title#Blog:  }</span>
+   </a>
+  </li></ul>
+ </div>
+ <div class="nav-right">
+  <ul id="links">
+   <li><a href="mailto:jumpsareop@gmail.com">contact</a></li>
+   <li><a target="_blank" href="https://github.com/jumps-are-op">github</a></li>
+   <li><a target="_blank" href="https://youtube.com/@jumpsareop">videos</a></li>
+  </ul>
+ </div>
+</nav>
+
+<body>
+<section class="section">
+ <div class="container">
+EOF
