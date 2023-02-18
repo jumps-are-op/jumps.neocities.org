@@ -26,6 +26,8 @@ cat <<-EOF
 <link rel="stylesheet" href="/style.css"/>
 <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
 </head>
+
+<body>
 <nav class="menu">
  <div class="nav-left">
   <ul><li>
@@ -43,8 +45,6 @@ cat <<-EOF
   </ul>
  </div>
 </nav>
-
-<body>
 <section class="section">
  <div class="container">
 EOF
