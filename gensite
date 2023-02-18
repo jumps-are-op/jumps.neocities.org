@@ -28,9 +28,9 @@ set +e
 if [ ! "$DRYRUN" ];then
 	echo "--- Pushing to github ---"
 
-	#git push 
-	#git add "$CONFIG_PUBLICDIR" && git commit -m "Rebuild by gensite at $(date)"
-	#git push
+	git push 
+	git add "$CONFIG_PUBLICDIR" && git commit -m "Rebuild by gensite at $(date)"
+	git push
 
 	echo "--- Uploading to jumps.neocities.org ---"
 	if command -v shcities >/dev/null;then
