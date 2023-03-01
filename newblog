@@ -1,4 +1,4 @@
-#!/bin/sh -ufe
+#!/bin/sh -ue
 # Made by jumps are op
 # This software is under GPL version 3 and comes with ABSOLUTELY NO WARRANTY
 # newblog BLOG NAME
@@ -7,7 +7,7 @@
 # Current date in YYYY/MM/DD (the superior format)
 date=$(date "+%Y/%m/%d")
 
-# Check for valid "slot"
+# Check for a valid "slot"
 i=0
 while :;do
 	[ ! -e "content/blog/$date/$i" ] && break
@@ -15,11 +15,11 @@ while :;do
 done
 dir=content/blog/$date/$i
 mkdir -p "$dir"
-blog=$(printf %s "$*" | sed 's/ /-/g').md
+blog=$(printf %s "$*" | sed 's/ /-/g').jmu
 cat >"$dir/$blog" <<-EOF
 	---
-	title: $*  
-	date: $(date)  
+	Title: $*  
+	Date: $(date)
 	---
 EOF
 

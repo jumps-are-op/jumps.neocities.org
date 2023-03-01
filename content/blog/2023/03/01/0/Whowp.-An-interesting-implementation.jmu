@@ -1,0 +1,224 @@
+---
+Title: Whowp. An interesting implementation.  
+Date: Wed Mar 1 10:49:19 PM +03 2023
+---
+
+When I write POSIX™ shell script
+people ask me (a lot) how the f\*\*k I write complex things in a shell script,
+shell is a simple language right? WRONG!
+shell (including POSIX shell) is a very complex language.
+So I wrote this blog to talk about how I think when writing scripts &amp;
+some tips/tricks I use when writing in POSIX shell.
+
+== Whowp - Our subject
+I will use `whowp` as an example for how to approach problems &amp;
+as the main subject.
+You can extend this to any other project/program, if you want.
+
+=== 1. The core
+Because we are writing a program that isn't just a stretched one-liner
+with some arguments parsing, we need to start building a "core".
+
+==== 1.1 Arguments
+Most people when they parse argument they write a *very long* and 
+**BAD** custom arguments parser (looking at you,
+https://daringcuteseal.xyz (**Cikitta**)).
+Don't worry POSIX has our back,
+`getopts` is a shell builtin just for this job!
+
+`getopts` can parse one-character option (also known as flags)
+and stop at `--` or at the first non-flag argument.
+For example, this will accept flags a, b, and c, and b take an argument
+then will leave
+the variable OPTIND at the index of the first non-option argument:
+```sh
+while getopts ab:c OPT;do
+	case $OPT in
+		a)SOMETHINGa=1;;
+		b)SOMETHINGb=$OPTARG;;
+		c)SOMETHINGc=1;;
+		*)echo "Invalid option $OPT" >&2; exit 1;;
+	esac
+done
+```
+
+Note: to make the first non-option argument $1 you need to shift OPTIND-1
+because OPTIND starts from 1, e.g. `shift $((OPTIND-1))`
+
+==== 1.2 Commands and subcommands in arguments
+"But jumps, what if I used command-based arguments?
+(e.g. `show todo TODO_INDEX`)".
+Just use a case statement for all the possibilities.
+Wait, you don't know how?
+Ok, remember that in shell everything is a string,
+and every string have the ability to expand using an expression.
+For example `"$1/$2"` will exapand to the first argument,
+a slash, and the second argument, all concatenated into one.
+
+So we can use `"$1/$2/$3"` and then compared to all commands/subcommand.
+
+Here is an example of using `"$1/$2/$3"` for arguments parsing:
+```sh
+case $1/$2/$3 in
+	show/todo/*);; # show a todo
+	show/sched/*);; # show a schedule event
+	todo/add/*) ;; # Add a todo
+	# Other command go here
+	# and if you need to use more subcommands
+	# add /$4/$5/$6... etc. to the case statement.
+	*)echo "Invalid command/subcommands $1 $2 $3" >&2; exit 1;;
+esac
+```
+
+"But wait, where is the quotes around the case statement string?".
+You actually don't need that,
+you only need to quote to prevent globing/argument expansion,
+which in this case there is no arguments and no globing will happen
+(note: that in the string between `case` and `in`, globs will **NEVER** expand).
+
+=== 1.3 Reading configurations
+First, let we see how other people store their configurations,
+
+1. https://github.com/daringcuteseal/whow/tree/main/config/todos (Original whow configuration):
+```sh
+# To-do's
+# Format: todo <name> [due] [@category]
+
+# Separate the due date with the time with a caret (^)
+# Example: 07/23/2022 or "07/23/2022^07:00 AM"
+
+todo "Record some footage for motion tracking"
+todo "Finish writing Whow" @programming
+todo "Write an article about privacy" "07/26/2022^10:00 PM"
+todo "Finish making my wolf model" @art
+todo "Finish my ongoing animation" "07/30/2022" @asap
+```
+
+As you can see, this is **BAD**,
+it's a pain to read/edit,
+hard to parse,
+and inhuman-readable.
+
+The way `whow` handle it is by creating a function
+then executing the file using the `.` (dot) command.
+
+2. https://ezntek.github.io/posts/20-2-2023-t2002/#the-new-implementation-showcase (Ezntek's implementation) of whow
+```toml
+[schedule]
+    anchor_date = 2023-02-06 # anchors which week this is referring to  
+    
+    repeats = [
+        "mon",
+        "thu",
+        "sun"
+    ]
+    
+    [schedule.days]
+        # The schedule for monday
+        [[schedule.days.mon]]
+            begin = 09:00:00
+            end = 10:00:00 # can be an empty string
+            label = "my dumb label"
+            categories = ["school"]
+        [[schedule.days.mon]]
+            begin = 09:30:00
+            end = ""
+            label = "foo bar"
+            categories = ["random"]
+        
+        [[schedule.days.thu]]
+            begin = 13:25:00
+            end = 14:30:30
+            label = "baz"
+            categories = ["random", "programming"]
+
+        [[schedule.days.sun]]
+            begin = 08:50:00
+            end = 09:20:00
+            label = "spam"
+            categories = ["cooking"]
+```
+
+This is actually better than Pearl's configuration,
+but we are writing a shell script **NOT** a *bloated* python program
+that can have external libraries.
+
+At this point we need to write our own configuration,
+because we are writing this script to work on UNIX™ systems,
+and UNIX systems usually use line-delimited configuration,
+I came up with this:
+```
+todo Finish writing Whowp @programming
+todo Do something for &Cikitta birthday @3/2
+todo An &important to-do
+# A comment. This should not be interpreted and should be ignored
+event @3/23 Ramadan starts
+event @7/12 My finals @studying
+# Another comment
+sched @ev @06:00 AM Wake up
+sched @we @06:00 PM @08:00 PM Work on my projects
+```
+
+"But wait, this is not machine-readable. Right?"  
+Well, if you think like a shell script, you will find it *very easy* to read.
+Now imagine you're a shell script (for real, I am not joking),
+you're reading the config file line by line,
+after reading the first line what will you find?
+```
+todo Finish writing Whowp @programming
+```
+Exactly. Now how do we know it's a to-do not an event or a scheduled event?
+
+"Uh, by checking the first word?"  
+Right, now after checking against `todo` and then deleting it
+(using https://youtu.be/QXineadwG4E (`${VAR#* }`)),
+what you will have is `Finish writing Whowp @programming`.
+"How I will parse that now?"  
+Think like a shell script,
+everything is a string and you can *manipulate* strings in a lot of ways,
+for example:  
+- Using `read -r firstword restofline` in a while loop to read the line
+word by word.
+(https://linuxize.com/post/bash-read (you can also use `read firstword restofline` to manage backslash esacping)  
+- Or using `${VAR#* }` also in a while loop and managing backslash escaping by
+your self.
+
+As you may have noticed, there is a `&` in some to-dos
+which can be used to add the word to the to-do and as a tag.
+
+= 2. Outputing to-dos/events
+To output to-dos (or events) you can use an array to save to-dos,
+but in POSIX shell there is no arrays.
+So to print a to-dos we need to read configs and print to-dos when reading.
+Which is what I did in `whowp`, here is an example implementation of it:
+```sh
+grep "^todo " | while read line;do
+	while read firstword restofline;do
+		# DO PARSING HERE...
+	done <<-EOF
+		$line
+	EOF
+	line=$restofline
+done
+```
+
+You can use `"^event "` instead to grep events.
+
+= 3. Deleting to-do/event
+To delete a to-do (or an event) we need to read the config file,
+then print the lines we need and save it somewhere (e.g. a temporary file),
+and then *we do not printing the lines we don't want*.
+
+= 4. Schedules parsing
+Parsing schedules is different because I allowed a space inside the time
+(i.e. `@06:00 AM`) and which time is first is treated as the start time
+and the second specified time is treated as the end time.
+For the time we can check the next word against `AM` or 'PM',
+and for setting start and end time we can just use a variable to check
+if we already set start time or not.
+
+= Wait, some of these stuff isn't in `whowp`
+Yeah you are right.
+I actually just copied `whow` then changed stuff that is bash-specific,
+I don't have that much time, school is now taking 90% of my time!  
+If you want you can implement it and then open a pull request.
