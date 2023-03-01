@@ -9,7 +9,7 @@ main(){
 		while read -r file;do
 			[ "$file" =  content/blog/index.jmu ] && continue
 			title=$(grep -i '^title: ' -- "$file" | head -n1)
-			title=${title#title: }
+			title=${title#[Tt]itle: }
 			title=${title%%  }
 			file=${file#content}
 			echo "<li><a href=\"${file%.*}.html\">${title:-"${file%.*}.html"}</a></li>"
