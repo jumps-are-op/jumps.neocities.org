@@ -8,7 +8,7 @@ main(){
 		echo "<ul>"
 		while read -r file;do
 			[ "$file" =  content/blog/index.jmu ] && continue
-			title=$(grep '^title: ' -- "$file" | head -n1)
+			title=$(grep -i '^title: ' -- "$file" | head -n1)
 			title=${title#title: }
 			title=${title%%  }
 			file=${file#content}
