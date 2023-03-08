@@ -1,0 +1,73 @@
+#!/bin/sh -eu
+# Made by jumps are op (jumpsareop@gmail.com)
+# This software is under GPL version 3 and comes with ABSOLUTELY NO WARRANTY
+
+# Configuration:
+# TITLE -> Title of your RSS feed (default "Title")
+# DESCRIPTION -> Description of your RSS feed (default "Description")
+# LINK -> World Wide Web link to your feed/website (required)
+# CATS -> Category(ises) your feed have/provide (optional) (e.g. News)
+# COPYRIGHT -> Copyright of your feeds (optional) (e.g. Copyright © 2023 Name)
+# IMG -> If set, the following will be used:
+#  I_LINK -> Link to the website the image represent (e.g. your website)
+#  I_TITLE -> Image's title (default is image's link)
+#  I_URL -> URL to the image (must be in the GIF, JPEG or PNG formats)
+#  I_DESC -> Description of the site the image represent (optional)
+#  I_HEIGHT -> Image's height in pixels (max 400) (default 31)
+#  I_WIDTH -> Image's width in pixels (max 144) (default 88)
+# LANGUAGE -> Language of your feed (e.g. en-us) (optional)
+# PUB_DATE -> Publication date in RFC 822 format (optional)
+# LAST_BUILD_DATE -> If set, add build date to the output feed in RFC 822
+# MANAGING_EDITOR -> Email of the feed maintainer (e.g. me@site.com) (optional)
+# EXTRACTOR -> Path to the extractor (see extractor file) (required)
+# LD -> Line determiner (default '\n')
+# CIND -> Starting indentation (optional)
+# IND_CHAR -> Character(s) to add when indenting (default "  ")
+# for more information see <https://www.rssboard.org/rss-profile>
+# TODO: Add support for Atoms <www.rssboard.org/rss-profile#namespace-elements>
+
+: "${TITLE:=Title}${DESCRIPTION:=Description}${LINK:?}${CATS=}${COPYRIGHT=}"
+: "${IMG=}${I_LINK=}${I_TITLE=}${I_URL=}${I_DESC=}"
+: "${I_HEIGHT=}${I_WIDTH=}${LANGUAGE=}${PUB_DATE=}${LAST_BUILD_DATE=}"
+: "${MANAGING_EDITOR=}${EXTRACTOR:?}${LD=${IFS#??}}${IND_CHAR=  }${CIND=}"
+
+safe(){ sed 's/</\&lt;/g; s/>/\&gt;/g';}
+ntags(){ while [ $# -ge 2 ];do ntag "$1" "$2"; shift 2 2>&-;done;}
+tags(){ while [ $# != 0 ];do printf %s "$CIND<$1>$LD"; ind; shift 2>&-;done;}
+utags(){ while [ $# != 0 ];do uind; printf %s "$CIND</$1>$LD";shift 2>&-;done;}
+ntag(){ printf %s "$CIND<$1>$(printf %s "$2" | safe)</$1>$LD";}
+ind(){ CIND=$CIND$IND_CHAR;}; uind(){ CIND=${CIND%"$IND_CHAR"};}
+
+tags 'rss version="2.0"' channel
+if [ "$IMG" ];then
+	tags image; ntags link "$I_LINK" title "$I_TITLE" url "$I_URL" \
+	${I_DESC:+description "$I_DESC"} ${I_HEIGHT:+height "$I_HEIGHT"} \
+	${I_WIDTH:+width "$I_WIDTH"}; utags image
+fi
+ntags title "$TITLE" description "$DESCRIPTION" link "$LINK" \
+	${CATS:+category "$CATS"} ${COPYRIGHT:+copyright "$COPYRIGHT"} \
+	docs "https://www.rssboard.org/rss-specification" \
+	generator 'MakeRSS (by Jumps <jumpsareop@gmail.com>)' \
+	${LANGUAGE:+language "$LANGUAGE"} ${PUB_DATE:+pubDate "$PUB_DATE"} \
+	${LAST_BUILD_DATE:+lastBuildDate "$(date +"%a, %d %h %Y %T %Z")"} \
+	${MANAGING_EDITOR:+managingEditor "$MANAGING_EDITOR"}
+genitems(){
+	for file in "${@:-.}"/*;do
+		[ ! -e "$file" ] && continue
+		[ -d "$file" ] && { genitems "$file"; continue;}
+		{
+			read -r title
+			for element in author category comments guid link pubDate
+				do read -r "${element?}";done
+			description=$(safe)
+			: "${description:-${title:?$file: No title/description provided}}"
+			tags item; ${title:+ntag title "$title"}
+			for element in author category comments guid link pubDate
+				do eval "\${$element:+ntag $element \"\$$element\"}";done
+			${description:+ntag description "$description"}; utags item
+		} <<-EOF
+			$("$EXTRACTOR" -- "$file") 
+		EOF
+	done
+}; genitems "$@"
+utags channel rss

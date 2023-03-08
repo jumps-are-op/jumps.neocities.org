@@ -1,0 +1,42 @@
+#!/bin/sh -eu
+
+# Made by jumps are op
+# This software is under GPL version 3 and comes with ABSOLUTELY NO WARRANTY
+
+# OUTPUT FORMAT:
+# title (optional if description is provided)
+# author (optional)
+# category (optional)
+# comments (optional)
+# guid (optional)
+# link (optional)
+# pubDate (optional)
+# description (in html) (optional if title is provided)
+# ... description continue to the rest of the output ...
+
+linkprefix=/blog
+inputprefix=public/blog/
+
+ised(){ printf %s "$input" | sed -n "/$1/{ s#$2#$3#p; q;}; \$s/.*/\n/p";}
+frommeta(){
+	ised "<meta name=\"$1\" content=\".*\">" \
+		"<meta name=\"$1\" content=\"\(\(\\\"\|[^\"]\)*\)\">" '\1'
+}
+input=$(cat "$@")
+
+# title
+ised '<title>.*<\/title>' '<title>\(.*\)</title>' '\1'
+
+frommeta author
+frommeta category
+frommeta comments
+frommeta guid
+frommeta author
+# shellcheck disable=SC2295
+echo "$linkprefix/${2#$inputprefix}"
+
+frommeta pubDate
+
+# description
+printf %s "$input" |
+	sed -n '/<div class="container">/,/<\/div>/p' | sed '1d; $d'

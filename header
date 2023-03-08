@@ -1,20 +1,24 @@
-#!/bin/sh
+#!/bin/sh -eu
 # Made by jumps are op
 # This software is under GPL version 3 and comes with ABSOLUTELY NO WARRANTY
 
 # read title
 while read -r line;do
-	case $line in
-		title:\ *)
-			title=${line#title: }
-			title=${title%  }
-			case $1 in */blog/*)title="Blog: $title"; esac
-			break
-		;;
-	esac
+	[ "$line" != --- ] && continue
+	while read -r line;do
+		case $line in
+			---)break 2;;
+			[Tt]itle:\ ?*)title=${line#[Tt]itle: };;
+			[Aa]uthor:\ ?*)author=${line#[Aa]uthor: };;
+			[Cc]ategory:\ ?*)category=${line#[Cc]ategory: };;
+			[Cc]omments:\ ?*)comments=${line#[Cc]omments: };;
+			[Gg]uid:\ ?*)guid=${line#[Gg]uid: };;
+			[Dd]ate:\ ?*)date=${line#[Dd]ate: };;
+		esac
+	done
 done <"$2"
 
-: "${title:=Jump"'"s webpage}"
+: "${title:=Jump"'"s webpage}${author=}${category=}${comments=}${guid=}${date=}"
 cat <<-EOF
 <!DOCTYPE html>
 <html lang="en">
@@ -22,9 +26,15 @@ cat <<-EOF
 <meta charset="utf-8"/>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>$title</title>
+${author:+<meta name=\"author\" content=\"$author\">
+}${category:+<meta name=\"category\" content=\"$category\">
+}${comments:+<meta name=\"comments\" content=\"$comments\">
+}${guid:+<meta name=\"guid\" content=\"$guid\">
+}${date:+<meta name=\"pubDate\" content=\"$date\">
+}<title>$title</title>
 <link rel="stylesheet" href="/style.css"/>
 <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+<link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Jumps Feed">
 </head>
 
 <body>
@@ -33,7 +43,7 @@ cat <<-EOF
   <ul><li>
    <a href="/">
     <img class="logo" src="/favicon.png" alt=""/>
-    <span class="sitename">${title#Blog:  }</span>
+    <span class="sitename">$title</span>
    </a>
   </li></ul>
  </div>

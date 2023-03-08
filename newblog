@@ -18,8 +18,12 @@ mkdir -p "$dir"
 blog=$(printf %s "$*" | sed 's/ /-/g').jmu
 cat >"$dir/$blog" <<-EOF
 	---
-	Title: $*  
-	Date: $(date)
+	Title: $*
+	Author: 
+	Category: 
+	Comments: 
+	Guid: 
+	Date: $(date +"%a, %d %h %Y %T %Z")
 	---
 EOF
 
