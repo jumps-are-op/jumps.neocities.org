@@ -51,7 +51,7 @@ gencontentdir(){
 	wait
 }
 
-gencontentfile()(
+gencontentfile(){
 	set -f
 	[ "$CONFIG_HEADER" ] && "$CONFIG_HEADER" -- "${CONFIG_CONTENTDIR}$1" \
 			>"$CONFIG_PUBLICDIR${1%.*}.html"
@@ -60,10 +60,10 @@ gencontentfile()(
 	parser=${parser#"${1##*.}"}
 
 	(eval "${parser:-echo "$PRG: $1: Unknown file format" >&2; exit 1 #} --" \
-		"${CONFIG_CONTENTDIR}$1" >>"$CONFIG_PUBLICDIR${1%.*}.html")
+		"\"\$CONFIG_CONTENTDIR\$1\"" >>"$CONFIG_PUBLICDIR${1%.*}.html")
 
 	[ "$CONFIG_FOOTER" ] && "$CONFIG_FOOTER" -- "${CONFIG_CONTENTDIR}$1" \
 			>>"$CONFIG_PUBLICDIR${1%.*}.html"
-)
+}
 
 main "$@"
