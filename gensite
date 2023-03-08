@@ -29,7 +29,7 @@ gensite.sh
 : "${LINK:=https://jumps.neocities.org}${CATS=}"
 : "${COPYRIGHT:=Copyright (C) 2023 Jumps are op (jumpsareop@gmail.com)}"
 : "${IMG=}${I_LINK=}${I_TITLE=}${I_URL=}${I_DESC=}${I_HEIGHT=}${I_WIDTH=}"
-: "${LANGUAGE:=en-us}${PUB_DATE=}${LAST_BUILD_DATE:=1}"
+: "${LANGUAGE:=en-us}${PUB_DATE=}${LAST_BUILD_DATE=}"
 : "${MANAGING_EDITOR:=jumpsareop@gmail.com}${EXTRACTOR:=extractor}"
 : "${LD:=${IFS#??}}${IND_CHAR=  }${CIND=}"
 export TITLE DESCRIPTION LINK CATS COPYRIGHT IMG I_LINK I_TITLE I_URL I_DESC \
