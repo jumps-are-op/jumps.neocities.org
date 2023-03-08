@@ -176,10 +176,13 @@ what you will have is `Finish writing Whowp @programming`.
 "How I will parse that now?"  
 Think like a shell script,
 everything is a string and you can *manipulate* strings in a lot of ways,
-for example:  
+for example:
+
 - Using `read -r firstword restofline` in a while loop to read the line
-word by word.
-(https://linuxize.com/post/bash-read (you can also use `read firstword restofline` to manage backslash esacping)  
+word by word. 
+(https://linuxize.com/post/bash-read
+(you can also use `read firstword restofline` to manage backslash esacping))
+
 - Or using `${VAR#* }` also in a while loop and managing backslash escaping by
 your self.
 
