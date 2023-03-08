@@ -1,7 +1,6 @@
 #!/bin/sh -eu
 # Made by jumps are op (jumpsareop@gmail.com)
 # This software is under GPL version 3 and comes with ABSOLUTELY NO WARRANTY
-
 # Configuration:
 # TITLE -> Title of your RSS feed (default "Title")
 # DESCRIPTION -> Description of your RSS feed (default "Description")
@@ -25,19 +24,16 @@
 # IND_CHAR -> Character(s) to add when indenting (default "  ")
 # for more information see <https://www.rssboard.org/rss-profile>
 # TODO: Add support for Atoms <www.rssboard.org/rss-profile#namespace-elements>
-
 : "${TITLE:=Title}${DESCRIPTION:=Description}${LINK:?}${CATS=}${COPYRIGHT=}"
 : "${IMG=}${I_LINK=}${I_TITLE=}${I_URL=}${I_DESC=}"
 : "${I_HEIGHT=}${I_WIDTH=}${LANGUAGE=}${PUB_DATE=}${LAST_BUILD_DATE=}"
 : "${MANAGING_EDITOR=}${EXTRACTOR:?}${LD=${IFS#??}}${IND_CHAR=  }${CIND=}"
-
 safe(){ sed 's/</\&lt;/g; s/>/\&gt;/g';}
 ntags(){ while [ $# -ge 2 ];do ntag "$1" "$2"; shift 2 2>&-;done;}
 tags(){ while [ $# != 0 ];do printf %s "$CIND<$1>$LD"; ind; shift 2>&-;done;}
 utags(){ while [ $# != 0 ];do uind; printf %s "$CIND</$1>$LD";shift 2>&-;done;}
 ntag(){ printf %s "$CIND<$1>$(printf %s "$2" | safe)</$1>$LD";}
 ind(){ CIND=$CIND$IND_CHAR;}; uind(){ CIND=${CIND%"$IND_CHAR"};}
-
 tags 'rss version="2.0"' channel
 if [ "$IMG" ];then
 	tags image; ntags link "$I_LINK" title "$I_TITLE" url "$I_URL" \
