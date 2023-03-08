@@ -14,7 +14,7 @@ main(){
 			file=${file#content}
 			echo "<li><a href=\"${file%.*}.html\">${title:-"${file%.*}.html"}</a></li>"
 		done <<-EOF
-			$(find content/blog -type f | sort)
+			$(find content/blog -type f | sort -r)
 		EOF
 		echo "</ul>"
 	fi
