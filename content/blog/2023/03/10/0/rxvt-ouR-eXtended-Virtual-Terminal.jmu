@@ -1,0 +1,58 @@
+---
+Title: rxvt: ouR eXtended Virtual Terminal
+Author: Jumps (jumpsareop@gmail.com)
+Category: terminal/rxvt
+Comments: 
+Guid: 
+Date: Fri, 10 Mar 2023 05:47:22 +03
+---
+
+At the start of UNIX™, they used typewriters.  
+A typewriter is basically a text-only printer, a very stupid printer.
+
+Then dumb terminal came out,
+people now we have a screen that display characters, and they liked it
+because they don't need to pay for paper and ink money!
+
+And then computer screens and X window system became famous,
+so Xterm was created.
+
+Xterm is the standard terminal emulator for X,
+started in 1984; 39 years ago. 
+Because Xterm is a very old terminal, barely anyone today uses it. 
+Then everybody started creating their own terminal,
+uxterm, mlterm, kitty, wezterm, aminal, yaft, iterm2, mintty etc.
+
+And one of them was RXVT,
+which followed the philosophy of
+"Make something simple and let people expand it."
+
+It worked, it worked so good that there is a (usable) fork of it called
+RXVT-Unicode (urxvt), rxvt but with Unicode support
+(which is kind of important to me so I can see emojis + Arabic scripts).
+
+But urxvt, like suckless software, you *can* patch it to add functionality!
+Some of these patches include:  
+- fixing line spacing
+(starting counting spacing from 1 instead of 0 was a bad idea)  
+- fix transparency  
+- adding smart resizing  
+- adding 24-bit color support (true RGB color)  
+- adding (sixel) https://en.wikipedia.org/wiki/Sixel images support   
+
+Here it's in all of its glory
+<img src="/blog/2023/03/10/0/URXVT-SIXEL-AND-TRUECOLOR.png"
+width="1000" height="600">
+<div>
+`lsix` displays low resolution images because it didn't detect the color pallet,
+here is a better image example
+</div>
+<img src="/blog/2023/03/10/0/DETAILED-SIXEL-URXVT-IMAGE.png">
+
+Resources:  
+- (Luke Smith's URxvt setup) https://youtu.be/eaBf_yFHps8  
+- My
+(URxvt)https://aur.archlinux.org/packages/rxvt-unicode-pixbuf-sixel-patched^AUR^
+fork that provide all the listed patches  
+- (making URxvt it less ugly)
+https://addy-dclxvi.github.io/post/configuring-urxvt/
