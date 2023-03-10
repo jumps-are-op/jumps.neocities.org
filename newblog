@@ -15,7 +15,7 @@ while :;do
 done
 dir=content/blog/$date/$i
 mkdir -p "$dir"
-blog=$(printf %s "$*" | sed 's/ /-/g').jmu
+blog=$(printf %s "$*" | tr -c '[:alnum:]' '-' | tr -cs '[:alnum:]').jmu
 cat >"$dir/$blog" <<-EOF
 	---
 	Title: $*
