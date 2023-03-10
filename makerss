@@ -1,4 +1,4 @@
-#!/bin/sh -eu
+#!/bin/sh -eux
 # Made by jumps are op (jumpsareop@gmail.com)
 # This software is under GPL version 3 and comes with ABSOLUTELY NO WARRANTY
 # Configuration:
@@ -48,7 +48,7 @@ ntags title "$TITLE" description "$DESCRIPTION" link "$LINK" \
 	${LAST_BUILD_DATE:+lastBuildDate "$(date +"%a, %d %h %Y %T %Z")"} \
 	${MANAGING_EDITOR:+managingEditor "$MANAGING_EDITOR"}
 genitems(){
-	for file in "${@:-.}"/*/;do
+	for file in "${@:-.}"/*;do
 		[ ! -e "$file" ] && continue
 		[ -d "$file" ] && { genitems "$file"; continue;}
 		[ "${file%.html}" != "$file" ] && {
