@@ -48,8 +48,8 @@ ntags title "$TITLE" description "$DESCRIPTION" link "$LINK" \
 	${LAST_BUILD_DATE:+lastBuildDate "$(date +"%a, %d %h %Y %T %Z")"} \
 	${MANAGING_EDITOR:+managingEditor "$MANAGING_EDITOR"}
 genitems(){
-	for file in "${@:-.}"/*;do
-		[ ! -e "$file" ] && continue
+	for file in "${@:-.}"/*/ "${@:-}";do
+		[ "${file%.html}" = "$file" ] || [ ! -e "$file" ] && continue
 		[ -d "$file" ] && { genitems "$file"; continue;}
 		{
 			read -r title
