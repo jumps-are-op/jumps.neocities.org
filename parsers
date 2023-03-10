@@ -6,7 +6,7 @@
 #
 # will print "Passing plain text file $2" to stderr and copy the file
 # NOTE: All output to stdout will be saved as html file
-# NOTE: Any extension not here is ignored
+# NOTE: Any extension not here will be reported
 # NOTE: Environment is copied to the child process, so you can use $VAR
 # NOTE: " -- $FILE" is added to the shell string
 md markdown -b "$URL"
