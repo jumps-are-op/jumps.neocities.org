@@ -1,4 +1,4 @@
-#!/bin/sh -eux
+#!/bin/sh -eu
 # Made by jumps are op (jumpsareop@gmail.com)
 # This software is under GPL version 3 and comes with ABSOLUTELY NO WARRANTY
 # Configuration:
@@ -65,5 +65,5 @@ genitems(){
 			$("$EXTRACTOR" -- "$file") 
 		EOF
 	done
-}; genitems "$@"
+}; for file;do shift; set -- "${file%/}";done; genitems "$@"
 utags channel rss

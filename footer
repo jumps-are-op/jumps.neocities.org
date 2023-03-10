@@ -19,7 +19,7 @@ main(){
 		echo "</ul>"
 	fi
 	cat <<-EOF
- </div>
+ </div> <!-- container -->
 </section>
 <footer>
   <p>Powered by

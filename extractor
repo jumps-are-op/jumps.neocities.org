@@ -14,7 +14,7 @@
 # description (in html) (optional if title is provided)
 # ... description continue to the rest of the output ...
 
-linkprefix=/blog
+linkprefix=https://jumps.neocities.org/blog
 inputprefix=public/blog/
 
 ised(){ printf %s "$input" | sed -n "/$1/{ s#$2#$3#p; q;}; \$s/.*/\n/p";}
@@ -31,12 +31,11 @@ frommeta author
 frommeta category
 frommeta comments
 frommeta guid
-frommeta author
-# shellcheck disable=SC2295
-echo "$linkprefix/${2#$inputprefix}"
+echo "$linkprefix/${2#"$inputprefix"}"
 
 frommeta pubDate
 
 # description
 printf %s "$input" |
-	sed -n '/<div class="container">/,/<\/div>/p' | sed '1d; $d'
+	sed -n '/<div class="container">/,/<\/div> <!-- container -->/p' |
+	sed '1d; $d'
