@@ -30,7 +30,9 @@ ised '<title>.*<\/title>' '<title>\(.*\)</title>' '\1'
 frommeta author
 frommeta category
 frommeta comments
-frommeta guid
+# GUID (Global Unique IDentifier) should be unique for every blog
+# the easiest way to do this is to use the blog's link
+echo "$linkprefix/${2#"$inputprefix"}"
 echo "$linkprefix/${2#"$inputprefix"}"
 
 frommeta pubDate
