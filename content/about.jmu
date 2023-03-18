@@ -1,7 +1,10 @@
+---
+Title: About me
+---
 Your chance of meeting an Iraqi teenager that writes POSIX™ shell scripts
 are **very low**, but never zero!
 
-# IMAGE: /home/jumps/Camera/me.jpg width=400 title="Me and my thinkpad"
+IMAGE: /me.jpg width=400 title="Me and my thinkpad"
 
 Oh, I didn't explain who am I? OK.
 Hey, I’m `Jumps are op` (also known as `jumps`). I’m a teenage POSIX™ shell
@@ -16,10 +19,16 @@ and 2 HDDs, one dead and the another one have a broken
 
 I mostly code in POSIX™ shell (*a.k.a. the best programming language ever*)
 I also know some C, and now trying to learn some Lisp!
-Stuff I wrote includes:  
-- (Whowp) https://github.com/jumps-are-op/whowp --- *the better whow*  
+Stuff I wrote includes:
+
+- (whowp) https://github.com/jumps-are-op/whowp --- *the better whow*  
 - (jmu) https://github.com/jumps-are-op/jmu --- *My MarkUp language*  
-- (This website) https://github.com/jumps-are-op/jumps.neocities.org  
+- (shelloflife) https://github.com/jumps-are-op/shelloflife
+--- *Life in your terminal*  
+- (keytrain) https://github.com/jumps-are-op/keytrain
+--- *Keyboard trainer for the UNIX TERMINAL*  
+- (all of this website) https://github.com/jumps-are-op/jumps.neocities.org
+
 Yes all of this is made by me (expect some CSS and hosting),  
 I don't use other people's site generators like Hugo,
 markup languages like Markdown,  
@@ -38,9 +47,10 @@ No matter what happen, I will never use GNOME.`
 
 `KDE will take an E, that why it's not for me.`
 
-`POSIX™ shell is 8/8, that why it have a late-rate.` (got it? POSIX love octal)
+`POSIX™ shell is 8/8, that why it have a late-rate.`
+(got it? POSIX loves octal numbers)
 
-And (sometimes) I do translate Arabic songs to English. Here is an example:
+And (sometimes) I do translate Arabic songs to English. Here is an example:  
 (Source) https://youtu.be/Gp4CcPGWeFo
 ```
 I'm afraid I lift my hands from you and you're a mine,
