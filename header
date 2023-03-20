@@ -29,14 +29,13 @@ cat <<-EOF
 ${author:+<meta name=\"author\" content=\"$author\">
 }${category:+<meta name=\"category\" content=\"$category\">
 }${comments:+<meta name=\"comments\" content=\"$comments\">
-}${guid:+<meta name=\"guid\" content=\"$guid\">
 }${date:+<meta name=\"pubDate\" content=\"$date\">
 }<title>$title</title>
-<link rel="stylesheet" href="/style.css"/>
-<link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+<link rel="stylesheet" href="/style.css">
+<link rel="shortcut icon" type="image/png" href="/favicon.png">
 <link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Jumps Feed">
 <link rel="me" href="https://mastodon.social/@jumpsareop">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -44,16 +43,16 @@ ${author:+<meta name=\"author\" content=\"$author\">
  <div class="nav-left">
   <ul><li>
    <a href="/">
-    <img class="logo" src="/favicon.png" alt=""/>
+    <img class="logo" src="/favicon.png">
     <span class="sitename">$title</span>
    </a>
   </li></ul>
  </div>
  <div class="nav-right">
   <ul id="links">
-   <li><a href="mailto:jumpsareop@gmail.com">contact</a></li>
-   <li><a target="_blank" href="https://github.com/jumps-are-op">github</a></li>
-   <li><a target="_blank" href="https://youtube.com/@jumpsareop">videos</a></li>
+   <li><a href="mailto:jumpsareop@gmail.com">Contact</a></li>
+   <li><a href="/blog/index.html">Blog</a></li>
+   <li><a href="/about.html">About</a></li>
   </ul>
  </div>
 </nav>

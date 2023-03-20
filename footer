@@ -6,26 +6,29 @@
 main(){
 	if [ "$2" = content/blog/index.jmu ];then
 		echo "<ul>"
-		while read -r file;do
+		find content/blog -type f | sort -r | while read -r file;do
 			[ "$file" =  content/blog/index.jmu ] && continue
 			title=$(grep -i '^title: ' -- "$file" | head -n1)
-			title=${title#[Tt]itle: }
-			title=${title%%  }
-			file=${file#content}
-			echo "<li><a href=\"${file%.*}.html\">${title:-"${file%.*}.html"}</a></li>"
-		done <<-EOF
-			$(find content/blog -type f | sort -r)
-		EOF
+			title=${title#[Tt]itle: } title=${title%%  }
+			file=${file#content} file=${file%.*}.html
+			echo "<li><a href=\"$file\">${title:-$file}</a></li>"
+		done
 		echo "</ul>"
 	fi
 	cat <<-EOF
  </div> <!-- container -->
 </section>
 <footer>
-  <p>Powered by
-   <a href="https://github.com/jumps-are-op">my mind</a> and
-   <a href="https://en.wikipedia.org/wiki/POSIX">POSIX</a>™ shell scripts
-  </p>
+  <div>
+    <p>
+      <a href="https://github.com/jumps-are-op" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github"></i> GitHub</a>
+      <a href="/feed.xml"><i class="fas fa-fw fa-rss-square"></i> FEED</a><br/>
+    Copyright © 2023 Jumps Are Op. Powered by
+     <a href="https://github.com/jumps-are-op/jumps.neocities.org">my mind</a>
+     and
+     <a href="https://en.wikipedia.org/wiki/POSIX">POSIX</a>™ shell scripts
+    </p>
+  </div>
 </footer>
 </body>
 </html>
