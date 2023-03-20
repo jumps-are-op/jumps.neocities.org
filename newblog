@@ -22,7 +22,6 @@ cat >"$dir/$blog" <<-EOF
 	Author: 
 	Category: 
 	Comments: 
-	Guid: 
 	Date: $(date +"%a, %d %h %Y %T %Z")
 	---
 EOF
