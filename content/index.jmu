@@ -1,16 +1,22 @@
 ---
 Title: Jump's webpage
 ---
-== Hello I am Jumps are op (mailto:jumpsareop@gmail.com)
+== Hello I am Jumps are op (or just `jumps`)
 
-I am still making this webpage, you may get back later.
+I am just yet another shell programmer. (or wizard as they call me)
 
-I made this using https://github.com/jumps-are-op/jumps.neocities.org (gensite.sh),
-a site generator in 69 lines (nice) of POSIX shell.  
+You will find that I do cool shit like a
+https://github.com/jumps-are-op/shelloflife
+(Game Of Life implementation in POSIX shell)!
 
-And the markup language I use is https://github.com/jumps-are-op/jmu (jmu),
-a markup language I made because `Markdown` and `AsciiDoc` sucks.
+Or you may find me rewriting bash scripts into shell scripts
+like rewriting  
+https://github.com/daringcuteseal/whow (whow) into
+https://github.com/jumps-are-op/whowp (whowp),  
+https://github.com/trakBan/ipfetch (ipfetch) into
+https://github.com/jumps-are-op/ippfetch (ippfetch),  
+https://github.com/tatsumoto-ren/bashcities (bashcities) into
+https://github.com/jumps-are-op/shcities (shcities).  
+It's a bad habit, I know.
 
-You can now go live your live
-
-Or you can see my ://blog/index.html (blogs)
+You may also find my (blogs) ://blog/index.html interesting.
