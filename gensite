@@ -4,12 +4,12 @@
 # This software is under GPL version 3 and comes with ABSOLUTELY NO WARRANTY
 
 # Warper around gensite.sh
-: "${DRYRUN:=}"
+: "${DRYRUN=}"
 
 # Configuration
 : "${CONFIG_CONTENTDIR:=content}${CONFIG_STATICDIR:=static}"
 : "${CONFIG_PUBLICDIR:=public}${CONFIG_HEADER:=header}${CONFIG_FOOTER:=footer}"
-: "${CONFIG_PARSERS:=parsers}${CONFIG_MKDIRARGS:=}${CONFIG_CPARGS:=}"
+: "${CONFIG_PARSERS:=parsers}${CONFIG_MKDIRARGS=}${CONFIG_CPARGS=}"
 
 # Check for GNU's -v
 [ "$(mkdir 2>&1)" = "mkdir: missing operand
@@ -36,17 +36,11 @@ export TITLE DESCRIPTION LINK CATS COPYRIGHT IMG I_LINK I_TITLE I_URL I_DESC \
 	I_HEIGHT I_WIDTH LANGUAGE PUB_DATE LAST_BUILD_DATE MANAGING_EDITOR \
 	EXTRACTOR LD IND_CHAR CIND
 echo "--- Creating RSS feeds ---"
-makerss "$CONFIG_PUBLICDIR/blog"/*/ > "$CONFIG_PUBLICDIR/feed.xml"
+makerss "$CONFIG_PUBLICDIR/blog"/*/ >"$CONFIG_PUBLICDIR/feed.xml"
 
 set +e
 if [ ! "$DRYRUN" ];then
-	echo "--- Pushing to github ---"
-
-	git add content
-	git commit -m "Rebuild by gensite at $(date)"
-	git push 
-
-	echo "--- Uploading to jumps.neocities.org ---"
+	echo "--- Uploading to Neocities.org ---"
 	command -v shcities >/dev/null ||
 		echo "shcities isn't installed, please install shcities." >&2
 	shcities push "$CONFIG_PUBLICDIR"
