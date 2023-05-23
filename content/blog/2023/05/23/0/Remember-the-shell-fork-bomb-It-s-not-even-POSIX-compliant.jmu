@@ -1,0 +1,59 @@
+---
+Title: Remember the shell fork bomb? It's not even POSIX-compliant!
+Author: jumps-are-op
+Category: shell/hacking
+Comments: 
+Date: Sun, 32 May 2023 08:35:42 +03
+---
+
+NOTE: Before reading any of this, DO NOT TRY THIS ON YOUR SYSTEM!
+NOT EVEN FOR "TESTING"! THIS IS MEANT FOR EDUCATIONAL PURPOSES ONLY.
+
+= Remember the shell fork bomb? It's not even POSIX-compliant!
+We all know the good old shell fork bomb `:(){ :|:&};:`.  
+Most of us when first read it treated it as "garbage".
+
+But nothing is garbage. (https://daringcuteseal.xyz/software/askme/ (right)?)
+Let me explain it really quick to let you understand.
+Here it's in a human-readable format
+```sh
+:(){
+	: | : &
+}
+:
+```
+So as you can see, we are creating a function called `:` then running it. 
+When we run it, it creates 2 sub-processes. One `:` and `:` and pipes
+first's `stdout` to second's `stdin` and put them in background with `&`.
+
+And now we have two `:` functions running, then the cycle repeats.
+
+But there are some problems here, the first one is the name of the
+function.  
+Why `:`? Why not `bomb` or `b`?  
+https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_235 (POSIX only allow use of alphanumerical characters),
+So using `:` won't run on
+POSIX-only shells. (e.g. `dash`) Let we call it `b` for simplicity.
+
+In POSIX shell, there are 2 types of functions:  
+A. Functions executed in the current shell environment.  
+B. Functions executed in a sub-shell environment.
+
+The first type is declared using `function(){ commands;}`, the second one
+is declared using `function()(commands)`.  
+If you noticed, we don't need a space after `(` and a command separator
+before `)`. (unlike `{` and `}`)
+
+So,
+```sh
+b()(b|b&);b
+```
+is a valid fork bomb.
+
+One last thing, because we now use sub-shells instead of executing in
+the current environment, we don't need the `&`.
+
+Now it's `b()(b|b);b`. Smaller by 2 bytes than the original!
+
+I love doing these small blogs to talk about shell scripts, may make more
+like it in the future.
