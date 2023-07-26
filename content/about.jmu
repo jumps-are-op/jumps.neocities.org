@@ -7,38 +7,38 @@ are **very low**, but never zero!
 IMAGE: /me.jpg width=400 title="Me and my thinkpad"
 
 Oh, I didn't explain who am I? OK.
-Hey, I’m `Jumps are op` (also known as `jumps`). I’m a teenage POSIX™ shell
+Hey, I'm `Jumps are op` (also known as `jumps`). I'm a teenage POSIX™ shell
 programmer who lives in Iraq!!
 
 I use Parabola GNU/Linux-libre and I am proud
 I do not use any **ANY** *proprietary software*
-%100 (FREE SOFTWARE) https://fsf.org FOREVER!!!!. 
+%100 [FREE SOFTWARE](https://fsf.org FOREVER)!!!!. 
 Currently only with my ThinkPad (no friends/people I code with :&lt;),
 and 2 HDDs, one dead and the another one have a broken
-(android x86) https://www.android-x86.org bootloader. (too lazy to fix)
+[android x86](https://www.android-x86.org bootloader). (too lazy to fix)
 
 I mostly code in POSIX™ shell (*a.k.a. the best programming language ever*)
 I also know some C, and now trying to learn some Lisp!
 Stuff I wrote includes:
 
-- (whowp) https://github.com/jumps-are-op/whowp --- *the better whow*  
-- (jmu) https://github.com/jumps-are-op/jmu --- *My MarkUp language*  
-- (shelloflife) https://github.com/jumps-are-op/shelloflife
+- [whowp](https://github.com/jumps-are-op/whowp) --- *the better whow*  
+- [jmu](https://github.com/jumps-are-op/jmu) --- *My MarkUp language*  
+- [shelloflife](https://github.com/jumps-are-op/shelloflife)
 --- *Life in your terminal*  
-- (keytrain) https://github.com/jumps-are-op/keytrain
+- [keytrain](https://github.com/jumps-are-op/keytrain)
 --- *Keyboard trainer for the UNIX TERMINAL*  
-- (all of this website) https://github.com/jumps-are-op/jumps.neocities.org
+- [all of this website](https://github.com/jumps-are-op/jumps.neocities.org)
 
 Yes all of this is made by me (expect some CSS and hosting),  
 I don't use other people's site generators like Hugo,
 markup languages like Markdown,  
 I wrote my own
-https://github.com/jumps-are-op/jumps.neocities.org/tree/master/gensite.sh
-(static site generator), and a 
-https://github.com/jumps-are-op/jmu (markup language),
+[static site generator]
+(https://github.com/jumps-are-op/jumps.neocities.org/tree/master/gensite.sh),
+and a [markup language](https://github.com/jumps-are-op/jmu),
 and even my own
-https://github.com/jumps-are-op/jumps.neocities.org/tree/master/makerss
-(RSS feeds generator)!
+[RSS feeds generator]
+(https://github.com/jumps-are-op/jumps.neocities.org/tree/master/makerss)!
 
 I do write some software poetry like:  
 
@@ -51,7 +51,7 @@ No matter what happen, I will never use GNOME.`
 (got it? POSIX loves octal numbers)
 
 And (sometimes) I do translate Arabic songs to English. Here is an example:  
-(Source) https://youtu.be/Gp4CcPGWeFo
+[Source](https://youtu.be/Gp4CcPGWeFo)
 ```
 I'm afraid I lift my hands from you and you're a mine,
 I'm afraid I stick with you and you're a bait.
@@ -73,8 +73,8 @@ I'm afraid from the unknown, I'm afraid from the stillness.
 ```
 
 Here is list of my socials if you really want it:  
-(<i class="fas fa-fw fa-envelope-square"></i> Email) mailto:jumpsareop@gmail.com  
-(<i class="fab fa-fw fa-github"></i> GitHub) https://github.com/jumps-are-op  
-(<i class="fab fa-fw fa-mastodon"></i> Mastodon) https://mastodon.social/@jumpsareop  
-(<i class="fab fa-fw fa-reddit"></i> Reddit) https://reddit.com/user/jumps-are-op  
-(<i class="fab fa-fw fa-youtube"></i> YouTube) https://youtube.com/@jumpsareop  
+[<i class="fas fa-fw fa-envelope-square"></i> Email](mailto:jumpsareop@gmail.com)  
+[<i class="fab fa-fw fa-github"></i> GitHub](https://github.com/jumps-are-op)  
+[<i class="fab fa-fw fa-mastodon"></i> Mastodon](https://mastodon.social/@jumpsareop)  
+[<i class="fab fa-fw fa-reddit"></i> Reddit](https://reddit.com/user/jumps-are-op)  
+[<i class="fab fa-fw fa-youtube"></i> YouTube](https://youtube.com/@jumpsareop)

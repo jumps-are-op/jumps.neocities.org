@@ -6,17 +6,17 @@ Title: Jump's webpage
 I am just yet another shell programmer. (or wizard as they call me)
 
 You will find that I do cool shit like a
-https://github.com/jumps-are-op/shelloflife
-(Game Of Life implementation in POSIX shell)!
+[Game Of Life implementation in POSIX shell]
+(https://github.com/jumps-are-op/shelloflife)!
 
 Or you may find me rewriting bash scripts into shell scripts
 like rewriting  
-https://github.com/daringcuteseal/whow (whow) into
-https://github.com/jumps-are-op/whowp (whowp),  
-https://github.com/trakBan/ipfetch (ipfetch) into
-https://github.com/jumps-are-op/ippfetch (ippfetch),  
-https://github.com/tatsumoto-ren/bashcities (bashcities) into
-https://github.com/jumps-are-op/shcities (shcities).  
+[whow](https://github.com/daringcuteseal/whow) into
+[whowp](https://github.com/jumps-are-op/whowp),  
+[ipfetch](https://github.com/trakBan/ipfetch) into
+[ippfetch](https://github.com/jumps-are-op/ippfetch),  
+[bashcities](https://github.com/tatsumoto-ren/bashcities) into
+[shcities](https://github.com/jumps-are-op/shcities).
 It's a bad habit, I know.
 
-You may also find my (blogs) ://blog/index.html interesting.
+You may also find my [blogs](/blog/index.html) interesting.

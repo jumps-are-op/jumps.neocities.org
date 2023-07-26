@@ -13,7 +13,7 @@ NOT EVEN FOR "TESTING"! THIS IS MEANT FOR EDUCATIONAL PURPOSES ONLY.
 We all know the good old shell fork bomb `:(){ :|:&};:`.  
 Most of us when first read it treated it as "garbage".
 
-But nothing is garbage. (https://daringcuteseal.xyz/software/askme/ (right)?)
+But nothing is garbage. ([right](https://daringcuteseal.xyz/software/askme/)?)
 Let me explain it really quick to let you understand.
 Here it's in a human-readable format
 ```sh
@@ -31,7 +31,8 @@ And now we have two `:` functions running, then the cycle repeats.
 But there are some problems here, the first one is the name of the
 function.  
 Why `:`? Why not `bomb` or `b`?  
-https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_235 (POSIX only allow use of alphanumerical characters),
+[POSIX only allow use of alphanumerical characters]
+(https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_235),
 So using `:` won't run on
 POSIX-only shells. (e.g. `dash`) Let we call it `b` for simplicity.
 
