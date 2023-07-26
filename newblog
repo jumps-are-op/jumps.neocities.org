@@ -1,25 +1,18 @@
-#!/bin/sh -ue
-# Made by jumps are op
+#!/bin/sh --
+set -ue; export POSIXLY_CORRECT=1
+# Made by Jumps Are Op (jumpsareop@gmail.com)
 # This software is under GPL version 3 and comes with ABSOLUTELY NO WARRANTY
-# newblog BLOG NAME
-# Add a new blog and edit it using $EDITOR
 
 # Current date in YYYY/MM/DD (the superior format)
-date=$(date "+%Y/%m/%d")
-
-# Check for a valid "slot"
-i=0
-while :;do
-	[ ! -e "content/blog/$date/$i" ] && break
-	i=$((i+1))
-done
+date=$(date "+%Y/%m/%d") i=0
+while [ -e "content/blog/$date/$i" ];do i=$((i+1));done
 dir=content/blog/$date/$i
 mkdir -p "$dir"
 blog=$(printf %s "$*" | tr -c '[:alnum:]' '-' | tr -cs '[:alnum:]').jmu
 cat >"$dir/$blog" <<-EOF
 	---
 	Title: $*
-	Author: 
+	Author: Jumps Are Op (jumpsareop@gmail.com)
 	Category: 
 	Comments: 
 	Date: $(date +"%a, %d %h %Y %T %Z")
