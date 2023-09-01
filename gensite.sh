@@ -24,7 +24,6 @@ main(){
 	set +f; set -- "$CONFIG_STATICDIR"/.*; shift; [ -e "$1" ] && shift
 	set -f -- "$CONFIG_STATICDIR"/* "$@"; [ ! -e "$1" ] && shift
 	[ $# != 0 ] && cp $CONFIG_CPARGS -R -- "$@" "$CONFIG_PUBLICDIR"
-	echo "--- Done generating ---"
 }
 
 gencontentdir(){

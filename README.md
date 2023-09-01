@@ -8,7 +8,7 @@ and my own RSS feed generator `makerss`.
 
 Everything here is a POSIX shell script,
 one exception is `jmu`, which is written in sed.
-Yes sed is a valid scripting language.
+Yes, sed is a valid scripting language.
 
 To add a new blog use `newblog`.
 

@@ -16,13 +16,12 @@ main(){
 		echo "</ul>"
 	fi
 	cat <<-EOF
- </div> <!-- container -->
-</section>
+</div> <!-- container -->
 <footer>
   <div>
     <p>
-      <a href="https://github.com/jumps-are-op" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github"></i> GitHub</a>
-      <a href="/feed.xml"><i class="fas fa-fw fa-rss-square"></i> FEED</a><br/>
+      <a href="https://github.com/jumps-are-op" rel="nofollow noopener noreferrer">GitHub</a>
+      <a href="/feed.xml"> FEED</a><br>
     Copyright © 2023 Jumps Are Op. Powered by
      <a href="https://github.com/jumps-are-op/jumps.neocities.org">my mind</a>
      and
