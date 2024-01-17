@@ -40,7 +40,6 @@ ${author:+<meta name=\"author\" content=\"$author\">
 <nav class="menu">
  <div class="nav-left">
   <ul><li>
-   <img class="logo" src="/favicon.png" alt="">
    <a href="/">
     <span class="sitename">$title</span>
    </a>
