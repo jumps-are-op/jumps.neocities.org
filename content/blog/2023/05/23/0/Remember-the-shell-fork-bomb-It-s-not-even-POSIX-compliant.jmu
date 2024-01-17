@@ -13,7 +13,8 @@ NOT EVEN FOR "TESTING"! THIS IS MEANT FOR EDUCATIONAL PURPOSES ONLY.
 We all know the good old shell fork bomb `:(){ :|:&};:`.  
 Most of us when first read it treated it as "garbage".
 
-But nothing is garbage. ([right](https://daringcuteseal.xyz/software/askme/)?)
+But nothing is garbage.
+([Right](https://daringcuteseal.github.io/software/askme/)?)
 Let me explain it really quick to let you understand.
 Here it's in a human-readable format
 ```sh

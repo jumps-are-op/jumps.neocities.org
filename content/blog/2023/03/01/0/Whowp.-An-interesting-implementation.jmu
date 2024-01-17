@@ -22,7 +22,7 @@ with some arguments parsing, we need to start building a "core".
 ==== 1.1 Arguments
 Most people when they parse argument they write a *very long* and 
 **BAD** custom arguments parser (looking at you,
-[**Cikitta**](https://daringcuteseal.xyz)).
+[**Cikitta**](https://daringcuteseal.github.io)).
 Don't worry POSIX has our back,
 `getopts` is a shell builtin just for this job!
 
@@ -181,8 +181,7 @@ for example:
 
 - Using `read -r firstword restofline` in a while loop to read the line
 word by word. 
-([you can also use `read firstword restofline` to manage backslash esacping]
-(https://linuxize.com/post/bash-read))
+(you can also use `read firstword restofline` to manage backslash esacping)
 
 - Or using `${VAR#* }` also in a while loop and managing backslash escaping by
 your self.
