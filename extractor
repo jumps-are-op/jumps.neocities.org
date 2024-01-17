@@ -1,7 +1,7 @@
-#!/bin/sh -eu
-
-# Made by jumps are op
-# This software is under GPL version 3 and comes with ABSOLUTELY NO WARRANTY
+#!/bin/sh --
+set -ue; export POSIXLY_CORRECT=1
+# BY: Jumps Are Op. (jumpsareop@gmail.com)
+# LICENSE: GPLv3-or-later
 
 # OUTPUT FORMAT:
 # title (optional if description is provided)
@@ -14,26 +14,25 @@
 # description (in html) (optional if title is provided)
 # ... description continue to the rest of the output ...
 
-linkprefix=https://jumps.neocities.org/blog
-inputprefix=public/blog/
+: "${LINK:=https://jumps.neocities.org/blog}${PUBLIC:=public}"
+inputprefix=$PUBLIC/blog/
 
 ised(){ printf %s "$input" | sed -n "/$1/{ s#$2#$3#p; q;}; \$s/.*/\n/p";}
 frommeta(){
-	ised "<meta name=\"$1\" content=\".*\">" \
-		"<meta name=\"$1\" content=\"\(\(\\\"\|[^\"]\)*\)\">" '\1'
+	for arg;do
+		ised '<meta name="'"$arg"'" content="[^"]*">' \
+		'<meta name="'"$arg"'" content="\(\(\"\|[^"]\)*\)">' '\1'
+	done
 }
 input=$(cat "$@")
 
 # title
 ised '<title>.*<\/title>' '<title>\(.*\)</title>' '\1'
 
-frommeta author
-frommeta category
-frommeta comments
+frommeta author category comments
 # GUID (Global Unique IDentifier) should be unique for every blog
 # the easiest way to do this is to use the blog's link
-echo "$linkprefix/${2#"$inputprefix"}"
-echo "$linkprefix/${2#"$inputprefix"}"
+printf %s\\n "${2#"$inputprefix"}" "$LINK/${2#"$inputprefix"}"
 
 frommeta pubDate
 

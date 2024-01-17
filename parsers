@@ -9,7 +9,5 @@
 # NOTE: Any extension not here will be reported
 # NOTE: Environment is copied to the child process, so you can use $VAR
 # NOTE: " -- $FILE" is added to the shell string
-md markdown -b "$URL"
-jmu f(){ sed '1d' "$@" | sed '1,/---/d' | jmu;}; f
-jm f(){ sed '1d' "$@" | sed '1,/---/d' | jmu;}; f
+jmu f(){ sed '1,/---/d' "$2" | jmu;}; f
 html cat

@@ -1,68 +1,55 @@
-#!/bin/sh -fue
-# shellcheck disable=SC2086,SC2223
-# Made by jumps are op
-# This software is under GPL version 3 and comes with ABSOLUTELY NO WARRANTY
+#!/bin/sh --
+set -ue; export POSIXLY_CORRECT=1
+# BY: Jumps Are Op. (jumpsareop@gmail.com)
+# LICENS: GPLv3-or-later
 
-# CONFIG_CONTENTDIR -> Content directory                     (default content)
-# CONFIG_STATICDIR -> Directory for files to copy as-is       (default static)
-# CONFIG_PUBLICDIR -> Output directory                        (default public)
-# CONFIG_HEADER -> Program to add it's output before HTML content
-# CONFIG_FOTTER -> Program to add it's output after HTML content
-# CONFIG_PARSERS -> File containing a list of parsers       (see parsers file)
-# CONFIG_MKDIRARGS -> mkdir's arguments
-# CONFIG_CPARGS -> cp's arguments
-# NOTE: $1 for CONFIG_HEADER and CONFIG_FOOTER is -- and $2 is the file name
+# CONTENT -> Content directory                	(default content)
+# STATIC -> Directory for files to copy as-is 	(default static)
+# PUBLIC -> Output directory                  	(default public)
+# HEADER -> Program to add it's output before HTML content
+# FOTTER -> Program to add it's output after HTML content
+# PARSERS -> File containing a list of parsers	(see parsers file)
+# NOTE: $1 for HEADER and FOOTER is -- and $2 is the file name
 
 main(){
-	: ${CONFIG_CONTENTDIR:=content} ${CONFIG_STATICDIR:=static}
-	: ${CONFIG_PUBLICDIR:=public} ${CONFIG_HEADER:=} ${CONFIG_FOOTER:=} 
-	: ${CONFIG_PARSERS:=} ${CONFIG_MKDIRARGS:=} ${CONFIG_CPARGS:=}
+	: "${CONTENT:=content}${STATIC:=static}${PUBLIC:=public}" \
+		"${HEADER:=}${FOOTER:=}${PARSERS:=}"
 	PRG=${0##*/}
 	echo "--- Generating content ---"
-	gencontentdir "$CONFIG_CONTENTDIR"
+	gencontentdir "$CONTENT"
 	echo "--- Copying statics ---"
-	set +f; set -- "$CONFIG_STATICDIR"/.*; shift; [ -e "$1" ] && shift
-	set -f -- "$CONFIG_STATICDIR"/* "$@"; [ ! -e "$1" ] && shift
-	[ $# != 0 ] && cp $CONFIG_CPARGS -R -- "$@" "$CONFIG_PUBLICDIR"
+	set -- "$STATIC"/.*; shift; [ -e "$1" ] && shift
+	set -- "$STATIC"/* "$@"; [ ! -e "$1" ] && shift
+	[ "$#" != 0 ] && cp -R -- "$@" "$PUBLIC"
 }
 
 gencontentdir(){
-	:<"$1"
-	if [ ! -d "$1" ];then
-		echo "$PRG: $1: Isn't a directory" >&2
-		exit 1
-	fi
+	[ ! -d "$1" ] && { echo "$PRG: $1: Isn't a directory" >&2; exit 1;}
 
-	mkdir $CONFIG_MKDIRARGS -p -- "$CONFIG_PUBLICDIR${1#"$CONFIG_CONTENTDIR"}"
-	set +f
-	set -f -- "$1"/*
+	mkdir -p -- "$PUBLIC${1#"$CONTENT"}"
+	set -- "$1"/*
 	[ ! -e "$1" ] && return
 
-	while :;do
-		if [ -d "$1" ]
-		then gencontentdir "$1"
-		else gencontentfile "${1#"$CONFIG_CONTENTDIR"}"
+	for file;do
+		if [ -d "$file" ]
+		then gencontentdir "$file"
+		else gencontentfile "$file"
 		fi &
-
-		[ $# = 1 ] && break
-		shift
 	done
 	wait
 }
 
-gencontentfile(){
-	set -f
-	[ "$CONFIG_HEADER" ] && "$CONFIG_HEADER" -- "${CONFIG_CONTENTDIR}$1" \
-			>"$CONFIG_PUBLICDIR${1%.*}.html"
+gencontentfile(){ # $1 starts with a
+	f=${1#"$CONTENT"} f=$PUBLIC/${f%.*}.html
+	ext=${1##*.}
+	[ "$HEADER" ] && "$HEADER" -- "$1" >"$f"
 
-	parser=$(grep "^${1##*.}\( \|$\)" -- "$CONFIG_PARSERS")
-	parser=${parser#"${1##*.}"}
+	parser=$(grep -- "^$ext\( \|$\)" "$PARSERS")
+	parser=${parser#"$ext"}
 
-	(eval "${parser:-echo "$PRG: $1: Unknown file format" >&2; exit 1 #} --" \
-		"\"\$CONFIG_CONTENTDIR\$1\"" >>"$CONFIG_PUBLICDIR${1%.*}.html")
+	(eval "${parser:?${1##*.}: Unknown file format} -- \"\$1\"" >>"$f")
 
-	[ "$CONFIG_FOOTER" ] && "$CONFIG_FOOTER" -- "${CONFIG_CONTENTDIR}$1" \
-			>>"$CONFIG_PUBLICDIR${1%.*}.html"
+	[ "$FOOTER" ] && "$FOOTER" -- "$1" >>"$f"
 }
 
 main "$@"

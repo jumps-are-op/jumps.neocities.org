@@ -1,41 +1,34 @@
-#!/bin/sh -ue
-# shellcheck disable=SC2223
-# Made by jumps are op
-# This software is under GPL version 3 and comes with ABSOLUTELY NO WARRANTY
+#!/bin/sh --
+set -ue; export POSIXLY_CORRECT=1
+# BY: Jumps Are Op. (jupmsareop@gmail.com)
+# LICENSE: GPLv3-or-later
 
-# Warper around gensite.sh
-: "${DRYRUN=}"
 
 # Configuration
-: "${CONFIG_CONTENTDIR:=content}${CONFIG_STATICDIR:=static}"
-: "${CONFIG_PUBLICDIR:=public}${CONFIG_HEADER:=header}${CONFIG_FOOTER:=footer}"
-: "${CONFIG_PARSERS:=parsers}"
+: "${DRYRUN=}${CONTENT:=content}${STATIC:=static}${PUBLIC:=public}" \
+	"${HEADER:=header}${FOOTER:=footer}${PARSERS:=parsers}"
 
-rm -rf -- "$CONFIG_PUBLICDIR"
-export CONFIG_CONTENTDIR CONFIG_STATICDIR CONFIG_PUBLICDIR CONFIG_HEADER \
-	CONFIG_FOOTER CONFIG_PARSERS
-gensite.sh
+rm -rf -- "$PUBLIC"
+export CONTENT STATIC PUBLIC HEADER FOOTER PARSERS
+./gensite.sh
 
 # RSS configuration
-: "${TITLE:=Jumps Feed}${DESCRIPTION:=My feeds}"
-: "${LINK:=https://jumps.neocities.org}${CATS=}"
-: "${COPYRIGHT:=Copyright (C) 2023 Jumps are op (jumpsareop@gmail.com)}"
-: "${IMG=}${I_LINK=}${I_TITLE=}${I_URL=}${I_DESC=}${I_HEIGHT=}${I_WIDTH=}"
-: "${LANGUAGE:=en-us}${PUB_DATE=}${LAST_BUILD_DATE=}"
-: "${MANAGING_EDITOR:=jumpsareop@gmail.com}${EXTRACTOR:=extractor}"
-: "${LD:=${IFS#??}}${IND_CHAR=  }${CIND=}"
+: "${COPYRIGHT:=Copyright (C) 2023 Jumps Are Op. (jumpsareop@gmail.com)}" \
+	"${TITLE:=Jumps Feed}${DESCRIPTION:=My feeds}${CATS=}" \
+	"${LINK:=https://jumps.neocities.org}${IMG=}" \
+	"${I_LINK=}${I_TITLE=}${I_URL=}${I_DESC=}${I_HEIGHT=}${I_WIDTH=}" \
+	"${LANGUAGE:=en-us}${PUB_DATE=}${LAST_BUILD_DATE=}" \
+	"${MANAGING_EDITOR:=jumpsareop@gmail.com}${EXTRACTOR:=extractor}" \
+	"${LD:=${IFS#??}}${IND_CHAR=  }${CIND=}"
 export TITLE DESCRIPTION LINK CATS COPYRIGHT IMG I_LINK I_TITLE I_URL I_DESC \
 	I_HEIGHT I_WIDTH LANGUAGE PUB_DATE LAST_BUILD_DATE MANAGING_EDITOR \
 	EXTRACTOR LD IND_CHAR CIND
 echo "--- Creating RSS feeds ---"
-makerss "$CONFIG_PUBLICDIR/blog"/*/ >"$CONFIG_PUBLICDIR/feed.xml"
+./makerss "$PUBLIC/blog"/*/ >"$PUBLIC/feed.xml"
 
-set +e
-if [ ! "$DRYRUN" ];then
+[ "$DRYRUN" ] || {
 	echo "--- Uploading to Neocities.org ---"
-	command -v shcities >/dev/null ||
-		{ echo "shcities isn't installed, please install shcities." >&2; exit;}
-	shcities push "$CONFIG_PUBLICDIR"
-fi
+	shcities push "$PUBLIC"
+}
 
 echo Done.

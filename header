@@ -1,6 +1,7 @@
-#!/bin/sh -eu
-# Made by jumps are op
-# This software is under GPL version 3 and comes with ABSOLUTELY NO WARRANTY
+#!/bin/sh --
+set -eu; export POSIXLY_CORRECT=1
+# BY: Jumps Are Op. (jumpsareop@gmail.com)
+# LICENSE: GPLv3-or-later
 
 # read title
 while read -r line;do
@@ -18,8 +19,7 @@ while read -r line;do
 	done
 done <"$2"
 
-: "${title:=Jump"'"s webpage}${author=}${category=}${comments=}${guid=}${date=}"
-#<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet">
+: "${title:=Jump\'s webpage}${author=}${category=}${comments=}${guid=}${date=}"
 cat <<-EOF
 <!DOCTYPE html>
 <html lang="en">
@@ -40,8 +40,8 @@ ${author:+<meta name=\"author\" content=\"$author\">
 <nav class="menu">
  <div class="nav-left">
   <ul><li>
+   <img class="logo" src="/favicon.png" alt="">
    <a href="/">
-    <img class="logo" src="/favicon.png" alt="">
     <span class="sitename">$title</span>
    </a>
   </li></ul>
