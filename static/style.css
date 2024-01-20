@@ -2,7 +2,7 @@ body{
   font-family: 'Cascadia Code', monospace;
   background: #010d1d;
   color: white;
-  width: 70%;
+  width: 90%;
   margin: auto;
 }
 
@@ -51,22 +51,17 @@ nav>.nav-right>ul>li {
  padding: 2px;
 }
 
-.logo{
-  vertical-align: middle;
-}
-
 pre>code {
   display: block;
-  padding: 1% 1%;
+  padding: 1%;
 }
 
 code {
   white-space: pre-wrap;
   word-wrap: break-word;
-  background: #202431;
-  color: white;
+  color: #62ff11;
   padding: 0.25% 0.25%;
-  border-radius: 5px;
+  font-size: 140%;
 }
 
 footer{
