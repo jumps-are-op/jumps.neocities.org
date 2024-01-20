@@ -1,0 +1,166 @@
+---
+Title: ISO C can time travel
+Author: Jumps Are Op (jumpsareop@gmail.com)
+Category: programming c
+Comments: 
+Date: Sat, 20 Jan 2024 23:50:42 +03
+---
+
+= ISO C *can* time travel.
+Yes, you read that right. But before everything, I need to explain to you
+how undefined behavior is handled in C compilers.
+
+== Undefined behavior in C.
+Most C compilers treat undefined behavior as "an unreachable state,"
+which means the program will never reach that state.
+Even if it ever reached that state,
+it's already game over and whatever the compiler dose is not "wrong".
+
+== Compilers are smart.
+So they will optimize code. One of the ways the compilers tries to do
+optimizations is using dead code elimination.
+
+For example:
+
+```c
+	/* x is unsigned int */
+	if(x >= 2)
+		return; /* return if x >= 2 */
+
+	switch(x){
+		/* if x is 0 */
+		case 0:
+			/* ... */
+			break;
+
+		/* if x is 1 */
+		case 1:
+			/* ... */
+			break;
+	
+		/* this will never be reached */
+		default:
+			/* ... unreachable code ... */
+			break;
+	}
+```
+
+The `default` branch can be optimized out and deleted.
+
+Other ways the compiler can optimize the code is using rearrangements.
+
+Both of the following C codes are interchangeable. Because `b[0]` and `b[1]`
+are independent from each other.
+
+```c
+	a += b[0];
+	a += b[1];
+```
+
+```c
+	a += b[1];
+	a += b[0];
+```
+
+NOTE: To force the compiler to strictly following the order of your commands,
+add `volatile` keyword to your variables.
+
+== The dirty and invisible bugs of undefined behavior.
+After knowing all the above, what do you thing the compiler can do with
+the following code?
+
+```c
+int getval(int *x){
+	int result;
+
+	if(x == NULL)
+		printf("WARN: Will dereference NULL!!!\n");
+
+	result = *x;
+
+	return result;
+}
+```
+
+The compiler have the right to change it to the following code:
+
+```c
+int getval(int *x){
+	int result;
+
+	result = *x;
+
+	if(x == NULL)
+		printf("WARN: Will dereference NULL!!!\n");
+
+	return result;
+}
+```
+
+Because `x` and `*x` are independent from each other
+(we are just reading them, we haven't changed anything.)
+
+And because dereferencing a NULL pointer is undefined behavior,
+and we already dereferenced the pointer,
+the compiler can optimize `if(x == NULL)`
+because undefined behavior have already happened
+(nothing the compiler dose is "wrong.")
+
+```c
+int getval(int *x){
+	int result;
+
+	result = *x;
+
+	return result;
+}
+```
+
+And now the new C dev is scratching their head because they're thinking
+that the NULL dereference is *time traveling before the NULL check.*
+
+They gonna blame the compiler developers for the bug in their compiler,
+even though the ISO C standard allows for that behavior
+and they are the one who's writing buggy code.
+
+== How do good C devs protect themselves from bugs like this?
+Easy, imagine undefined behavior like a virus that spreads.
+
+```c
+void f(void){
+	char *x = 0;
+	*x = 1;
+}
+
+int main(){
+	printf("Hello\n");
+	return 0;
+}
+```
+
+In the example code, only the function `f` is infected. The main function is
+fine.
+
+```c
+void f(void){
+	char *x = 0;
+	*x = 1;
+}
+
+int main(){
+	printf("Hello\n");
+	f();
+	return 0;
+}
+```
+
+And in this example, the entire program is infected. So the compiler
+also have the right to switch the source code of your program into:
+
+```c
+int main(){
+	/* or the default SIGSEGV handler */
+	fprintf(stderr, "Segmentation fault (core dumped)\n");
+	return 139;
+}
+```
