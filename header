@@ -37,21 +37,17 @@ ${author:+<meta name=\"author\" content=\"$author\">
 <link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Jumps Feed">
 </head>
 <body>
-<nav class="menu">
- <div class="nav-left">
-  <ul><li>
-   <a href="/">
-    <span class="sitename">$title</span>
-   </a>
-  </li></ul>
- </div>
- <div class="nav-right">
-  <ul id="links">
-   <li><a href="mailto:jumpsareop@gmail.com">Contact</a></li>
-   <li><a href="/blog/index.html">Blog</a></li>
-   <li><a href="/about.html">About</a></li>
-  </ul>
- </div>
+<nav>
+ <table>
+  <tbody>
+   <tr>
+    <th width="70%" align="left"><a href="/">$title</a></li>
+    <th width="3%" align="right"><a href="mailto:jumpsareop@gmail.com">Contact</a></li>
+    <th width="3%" align="right"><a href="/blog/index.html">Blog</a></li>
+    <th width="3%" align="right"><a href="/about.html">About</a></li>
+   </tr>
+  </tbody>
+ </table>
 </nav>
 <div class="container">
 EOF

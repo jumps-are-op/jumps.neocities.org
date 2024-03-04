@@ -1,70 +1,38 @@
 body{
-  font-family: 'Cascadia Code', monospace;
-  background: #010d1d;
-  color: white;
-  width: 90%;
-  margin: auto;
+	font-family: 'Cascadia Code', monospace;
+	background: #010d1d;
+	color: white;
+	width: 90%;
+	margin: auto;
 }
 
 a{
-  color: #81a1c1;
-  text-decoration: none;
+	color: #81a1c1;
+	text-decoration: none;
 }
 
 a:hover{
-  text-decoration: underline;
+	text-decoration: underline;
 }
 
 img{
 	max-width: 100%;
 }
 
-nav{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 3% 0%;
-}
-
-nav ul{
-  display: flex;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  overflow: hidden;
-}
-
-nav ul li{
-  display: inline-block;
-  list-style-type: none;
-}
-
-nav>div>ul>li>a{
-  color: #eceff4;
-  display: block;
-  margin: 0px 5px;
-  font-weight: bold;
-  font-size: 100%;
-}
-
-nav>.nav-right>ul>li {
- padding: 2px;
-}
-
 pre>code {
-  display: block;
-  padding: 1%;
+	display: block;
+	padding: 1%;
 }
 
 code {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  color: #62ff11;
-  padding: 0.25% 0.25%;
-  font-size: 140%;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	color: #62ff11;
+	padding: 0.25% 0.25%;
+	font-size: 140%;
 }
 
 footer{
-  padding-top: 1%;
-  font-size: 110%;
+	padding-top: 1%;
+	font-size: 110%;
 }
