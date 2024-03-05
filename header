@@ -38,7 +38,7 @@ ${author:+<meta name=\"author\" content=\"$author\">
 </head>
 <body>
 <nav>
- <table>
+ <table width="100%">
   <tbody>
    <tr>
     <th width="70%" align="left"><a href="/">$title</a></li>

@@ -1,7 +1,7 @@
 #!/bin/sh --
 set -ue; export POSIXLY_CORRECT=1
 # BY: Jumps Are Op. (jumpsareop@gmail.com)
-# LICENS: GPLv3-or-later
+# LICENSE: GPLv3-or-later
 
 # CONTENT -> Content directory                	(default content)
 # STATIC -> Directory for files to copy as-is 	(default static)
@@ -34,22 +34,23 @@ gencontentdir(){
 		if [ -d "$file" ]
 		then gencontentdir "$file"
 		else gencontentfile "$file"
-		fi &
+		fi
 	done
 	wait
 }
 
-gencontentfile(){ # $1 starts with a
+gencontentfile(){
 	f=${1#"$CONTENT"} f=$PUBLIC/${f%.*}.html
 	ext=${1##*.}
-	[ "$HEADER" ] && "$HEADER" -- "$1" >"$f"
-
-	parser=$(grep -- "^$ext\( \|$\)" "$PARSERS")
+	parser=$(grep -- "^$ext\( \|$\)" "$PARSERS") ||:
 	parser=${parser#"$ext"}
-
-	(eval "${parser:?${1##*.}: Unknown file format} -- \"\$1\"" >>"$f")
-
-	[ "$FOOTER" ] && "$FOOTER" -- "$1" >>"$f"
+	if [ ${parser:+s} ];then
+		[ ! "$HEADER" ] || "$HEADER" -- "$1" >"$f"
+		(eval "$parser -- \"\$1\"" >>"$f")
+		[ ! "$FOOTER" ] || "$FOOTER" -- "$1" >>"$f"
+		return
+	fi
+	cp -- "$1" "${f%.*}.$ext"
 }
 
 main "$@"

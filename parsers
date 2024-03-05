@@ -9,5 +9,5 @@
 # NOTE: Any extension not here will be reported
 # NOTE: Environment is copied to the child process, so you can use $VAR
 # NOTE: " -- $FILE" is added to the shell string
+# NOTE: If there's no format, then the file is copied as-is.
 jmu f(){ sed '1,/---/d' "$2" | jmu;}; f
-html cat

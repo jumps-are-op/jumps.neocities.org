@@ -40,11 +40,11 @@ Some of these patches include:
 - adding [sixel](https://en.wikipedia.org/wiki/Sixel) images support   
 
 Here it's in all of its glory
-IMAGE: /blog/2023/03/10/0/URXVT-SIXEL-AND-TRUECOLOR.png 1000x600
+IMAGE: /blog/2023/03/10/urxvt-sixel-truecolor.png width="1000" height="600"
 
 `lsix` displays low resolution images because it didn't detect the color pallet,
 here is a better image example
-IMAGE: /blog/2023/03/10/0/DETAILED-SIXEL-URXVT-IMAGE.png
+IMAGE: /blog/2023/03/10/sixel-urxvt.png
 
 Resources:  
 - [Luke Smith's URxvt setup](https://youtu.be/eaBf_yFHps8)  
